@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { Streamlit } from "streamlit-component-lib";
 
 // ─── constants ────────────────────────────────────────────────────────────────
 const ACCENT = "#00e5a0";
@@ -209,12 +210,58 @@ export default function AudioEditor() {
   const [exportData, setExportData] = useState(null);
   const [exportMsg, setExportMsg] = useState("");
 
+  // Effects state
+  const [delayTime, setDelayTime] = useState(0);      // 0 = off, up to 1s
+  const [delayFeedback, setDelayFeedback] = useState(0.3);
+  const [reverbMix, setReverbMix] = useState(0);       // 0 = dry, 1 = full wet
+  const [distortion, setDistortion] = useState(0);      // 0 = off, 1 = max
+
   const sourceRef = useRef(null);
   const gainNodeRef = useRef(null);
   const startTimeRef = useRef(0);
   const startOffsetRef = useRef(0);
   const rafRef = useRef(null);
   const waveContainerRef = useRef(null);
+
+  // Persistent effect node refs (created once, params updated live)
+  const delayNodeRef = useRef(null);
+  const delayFbRef = useRef(null);
+  const delayWetRef = useRef(null);
+  const delayDryRef = useRef(null);
+  const waveShaperRef = useRef(null);
+  const reverbConvRef = useRef(null);
+  const reverbDryRef = useRef(null);
+  const reverbWetRef = useRef(null);
+  const chainBuiltRef = useRef(false);
+
+  // ── Streamlit lifecycle ──────────────────────────────────────────────────
+  const readyRef = useRef(false);
+
+  useEffect(() => {
+    const onRender = (event) => {
+      const args = event.detail.args || {};
+      if (!readyRef.current && args.audio_url) {
+        fetch(args.audio_url)
+          .then(r => r.arrayBuffer())
+          .then(ab => audioCtx.decodeAudioData(ab))
+          .then(buf => {
+            setAudioBuffer(buf);
+            setDuration(buf.duration);
+            setTrimStart(0);
+            setTrimEnd(buf.duration);
+            setFileName(args.audio_url.split("/").pop() || "audio");
+          })
+          .catch(() => {});
+      }
+      readyRef.current = true;
+      Streamlit.setFrameHeight();
+    };
+    Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender);
+    Streamlit.setComponentReady();
+    return () => Streamlit.events.removeEventListener(Streamlit.RENDER_EVENT, onRender);
+  }, [audioCtx]);
+
+  useEffect(() => { Streamlit.setFrameHeight(); });
 
   // Observe container width
   useEffect(() => {
@@ -258,16 +305,83 @@ export default function AudioEditor() {
     stopPlayback();
     if (audioCtx.state === "suspended") audioCtx.resume();
 
-    const gain = gainNodeRef.current || audioCtx.createGain();
-    gainNodeRef.current = gain;
-    gain.gain.value = gainNodeRef.current.gain.value;
-    gain.connect(audioCtx.destination);
+    // Build persistent effects chain once: gain → delay mix → waveshaper → reverb mix → destination
+    if (!chainBuiltRef.current) {
+      const g = audioCtx.createGain();
+      gainNodeRef.current = g;
+
+      // Delay nodes (always connected; delayTime=0 means pass-through)
+      const del = audioCtx.createDelay(2.0);
+      const fb = audioCtx.createGain();
+      const dDry = audioCtx.createGain();
+      const dWet = audioCtx.createGain();
+      const dMix = audioCtx.createGain();
+      delayNodeRef.current = del;
+      delayFbRef.current = fb;
+      delayDryRef.current = dDry;
+      delayWetRef.current = dWet;
+
+      // Waveshaper (linear curve = pass-through)
+      const ws = audioCtx.createWaveShaper();
+      ws.oversample = "4x";
+      waveShaperRef.current = ws;
+
+      // Reverb nodes
+      const conv = audioCtx.createConvolver();
+      const irLen = audioCtx.sampleRate * 2;
+      const ir = audioCtx.createBuffer(2, irLen, audioCtx.sampleRate);
+      for (let ch = 0; ch < 2; ch++) {
+        const d = ir.getChannelData(ch);
+        for (let j = 0; j < irLen; j++) {
+          d[j] = (Math.random() * 2 - 1) * Math.pow(1 - j / irLen, 2.5);
+        }
+      }
+      conv.buffer = ir;
+      const rDry = audioCtx.createGain();
+      const rWet = audioCtx.createGain();
+      const rMix = audioCtx.createGain();
+      reverbConvRef.current = conv;
+      reverbDryRef.current = rDry;
+      reverbWetRef.current = rWet;
+
+      // Wire: gain → delay dry/wet mix → waveshaper → reverb dry/wet mix → destination
+      g.connect(dDry); dDry.connect(dMix);
+      g.connect(del); del.connect(fb); fb.connect(del); del.connect(dWet); dWet.connect(dMix);
+      dMix.connect(ws);
+      ws.connect(rDry); rDry.connect(rMix);
+      ws.connect(conv); conv.connect(rWet); rWet.connect(rMix);
+      rMix.connect(audioCtx.destination);
+
+      chainBuiltRef.current = true;
+    }
+
+    // Apply current parameter values to nodes
+    gainNodeRef.current.gain.value = gain;
+    delayNodeRef.current.delayTime.value = delayTime;
+    delayFbRef.current.gain.value = delayFeedback;
+    delayDryRef.current.gain.value = 1;
+    delayWetRef.current.gain.value = delayTime > 0 ? 0.6 : 0;
+
+    // Distortion curve
+    const amount = distortion * 400;
+    const n = 44100;
+    const curve = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      const x = (i * 2) / n - 1;
+      curve[i] = amount > 0
+        ? ((3 + amount) * x * 20 * (Math.PI / 180)) / (Math.PI + amount * Math.abs(x))
+        : x; // linear pass-through
+    }
+    waveShaperRef.current.curve = curve;
+
+    reverbDryRef.current.gain.value = 1 - reverbMix;
+    reverbWetRef.current.gain.value = reverbMix;
 
     const src = audioCtx.createBufferSource();
     src.buffer = audioBuffer;
     src.loop = loop;
     if (loop) { src.loopStart = trimStart; src.loopEnd = trimEnd; }
-    src.connect(gain);
+    src.connect(gainNodeRef.current);
 
     const offset = clamp(fromSec, trimStart, trimEnd);
     src.start(0, offset, loop ? undefined : trimEnd - offset);
@@ -293,12 +407,41 @@ export default function AudioEditor() {
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
-  }, [audioBuffer, audioCtx, loop, trimStart, trimEnd, stopPlayback]);
+  }, [audioBuffer, audioCtx, loop, trimStart, trimEnd, stopPlayback, gain, delayTime, delayFeedback, distortion, reverbMix]);
 
-  // Update gain live
+  // ── Live parameter updates (no restart needed) ──────────────────────────
   useEffect(() => {
     if (gainNodeRef.current) gainNodeRef.current.gain.value = gain;
   }, [gain]);
+
+  useEffect(() => {
+    if (delayNodeRef.current) delayNodeRef.current.delayTime.value = delayTime;
+    if (delayWetRef.current) delayWetRef.current.gain.value = delayTime > 0 ? 0.6 : 0;
+  }, [delayTime]);
+
+  useEffect(() => {
+    if (delayFbRef.current) delayFbRef.current.gain.value = delayFeedback;
+  }, [delayFeedback]);
+
+  useEffect(() => {
+    if (waveShaperRef.current) {
+      const amount = distortion * 400;
+      const n = 44100;
+      const curve = new Float32Array(n);
+      for (let i = 0; i < n; i++) {
+        const x = (i * 2) / n - 1;
+        curve[i] = amount > 0
+          ? ((3 + amount) * x * 20 * (Math.PI / 180)) / (Math.PI + amount * Math.abs(x))
+          : x;
+      }
+      waveShaperRef.current.curve = curve;
+    }
+  }, [distortion]);
+
+  useEffect(() => {
+    if (reverbDryRef.current) reverbDryRef.current.gain.value = 1 - reverbMix;
+    if (reverbWetRef.current) reverbWetRef.current.gain.value = reverbMix;
+  }, [reverbMix]);
 
   const togglePlay = () => {
     if (isPlaying) stopPlayback();
@@ -334,6 +477,16 @@ export default function AudioEditor() {
     const url = URL.createObjectURL(blob);
     setExportData(url);
     setExportMsg(`✓ Trimmed: ${fmtTime(trimStart)} → ${fmtTime(trimEnd)} (${fmtTime(trimEnd - trimStart)})`);
+
+    // Send to Streamlit
+    const bytes = new Uint8Array(wav);
+    let binary = "";
+    for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+    Streamlit.setComponentValue({
+      trimStart, trimEnd, duration, gain,
+      delayTime, delayFeedback, reverbMix, distortion,
+      wavBase64: btoa(binary),
+    });
   };
 
   const handleScroll = (e) => {
@@ -481,6 +634,61 @@ export default function AudioEditor() {
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: TEXT, minWidth: 36, textAlign: "right" }}>
               {(gain * 100).toFixed(0)}%
             </span>
+          </div>
+        </div>
+
+        {/* Effects rack */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "stretch", marginTop: 12 }}>
+
+          {/* Delay */}
+          <div style={{ background: SURFACE, borderRadius: 12, border: `1px solid ${BORDER}`, padding: "14px 18px", flex: 1, minWidth: 200 }}>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: ACCENT2, letterSpacing: "0.15em", marginBottom: 10 }}>DELAY</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+              <label style={{ minWidth: 36 }}>TIME</label>
+              <input type="range" min={0} max={1} step={0.01} value={delayTime}
+                onChange={e => setDelayTime(Number(e.target.value))}
+                style={{ flex: 1, accentColor: ACCENT2 }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: TEXT, minWidth: 40, textAlign: "right" }}>
+                {delayTime === 0 ? "OFF" : `${(delayTime * 1000).toFixed(0)}ms`}
+              </span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <label style={{ minWidth: 36 }}>FDBK</label>
+              <input type="range" min={0} max={0.9} step={0.01} value={delayFeedback}
+                onChange={e => setDelayFeedback(Number(e.target.value))}
+                style={{ flex: 1, accentColor: ACCENT2 }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: TEXT, minWidth: 40, textAlign: "right" }}>
+                {(delayFeedback * 100).toFixed(0)}%
+              </span>
+            </div>
+          </div>
+
+          {/* Reverb */}
+          <div style={{ background: SURFACE, borderRadius: 12, border: `1px solid ${BORDER}`, padding: "14px 18px", flex: 1, minWidth: 160 }}>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#f59e0b", letterSpacing: "0.15em", marginBottom: 10 }}>REVERB</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <label style={{ minWidth: 28 }}>MIX</label>
+              <input type="range" min={0} max={1} step={0.01} value={reverbMix}
+                onChange={e => setReverbMix(Number(e.target.value))}
+                style={{ flex: 1, accentColor: "#f59e0b" }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: TEXT, minWidth: 40, textAlign: "right" }}>
+                {reverbMix === 0 ? "OFF" : `${(reverbMix * 100).toFixed(0)}%`}
+              </span>
+            </div>
+          </div>
+
+          {/* Distortion */}
+          <div style={{ background: SURFACE, borderRadius: 12, border: `1px solid ${BORDER}`, padding: "14px 18px", flex: 1, minWidth: 160 }}>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "#f87171", letterSpacing: "0.15em", marginBottom: 10 }}>DISTORTION</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <label style={{ minWidth: 28 }}>AMT</label>
+              <input type="range" min={0} max={1} step={0.01} value={distortion}
+                onChange={e => setDistortion(Number(e.target.value))}
+                style={{ flex: 1, accentColor: "#f87171" }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: TEXT, minWidth: 40, textAlign: "right" }}>
+                {distortion === 0 ? "OFF" : `${(distortion * 100).toFixed(0)}%`}
+              </span>
+            </div>
           </div>
         </div>
 
