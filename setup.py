@@ -8,7 +8,7 @@ setup(
     description="A browser-based audio editor component for Streamlit — trim, gain, loop, export WAV",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/streamlit-audio-editor",
+    url="https://github.com/RhythrosaLabs/streamlit-audio-editor",
     packages=find_packages(),
     include_package_data=True,
     classifiers=[
