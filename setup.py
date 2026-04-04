@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="streamlit-audio-editor",
-    version="0.1.0",
-    author="Your Name",
-    author_email="you@example.com",
+    version="0.1.1",
+    author="Dan Sheils",
+    author_email="",
     description="A browser-based audio editor component for Streamlit — trim, gain, loop, export WAV",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
