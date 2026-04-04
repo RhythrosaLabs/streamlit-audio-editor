@@ -17,34 +17,47 @@ else:
 
 def st_audio_editor(audio_url=None, key=None):
     """
-    Render an interactive browser-based audio editor.
+    Render an interactive browser-based audio editor with a full effects rack
+    and jam-session recording.
 
     Supports loading any audio format the browser can decode (MP3, WAV, OGG,
-    M4A, FLAC). Users can trim, adjust gain, loop, and export a clean WAV of
-    the selected region — all in-browser with no server-side ffmpeg required.
+    M4A, FLAC). Users can trim, adjust gain, apply real-time effects (EQ,
+    filter, compressor, delay, chorus, distortion, tremolo, reverb, pan,
+    speed/pitch), route a microphone through the chain, and record the
+    effected output — all client-side via the Web Audio API.
 
     Parameters
     ----------
     audio_url : str, optional
-        URL or data-URI of an audio file to pre-load. If None, the user loads
-        a file via the in-editor button.
+        URL or data-URI of an audio file to pre-load.
     key : str, optional
         Streamlit widget key.
 
     Returns
     -------
     dict | None
-        On export, returns::
+        On **Export Trim**, returns a dict with ``type="export"``::
 
             {
-                "trimStart": float,   # seconds
-                "trimEnd":   float,   # seconds
-                "duration":  float,   # total file duration in seconds
-                "gain":      float,   # 0.0–2.0
-                "wavBase64": str,     # base64-encoded WAV of trimmed region
+                "type":       "export",
+                "trimStart":  float,
+                "trimEnd":    float,
+                "duration":   float,
+                "gain":       float,
+                "wavBase64":  str,    # base64-encoded WAV
+                # … plus all current effect parameters
             }
 
-        Returns None until the user clicks Export.
+        On **Send Recording** (jam session), returns ``type="recording"``::
+
+            {
+                "type":             "recording",
+                "mimeType":         str,   # e.g. "audio/webm;codecs=opus"
+                "recordingBase64":  str,   # base64-encoded audio blob
+                "durationSec":      float,
+            }
+
+        Returns None until the user exports or sends a recording.
 
     Example
     -------
@@ -52,9 +65,11 @@ def st_audio_editor(audio_url=None, key=None):
     >>> from streamlit_audio_editor import st_audio_editor
     >>>
     >>> result = st_audio_editor(key="editor")
-    >>> if result:
-    ...     wav_bytes = base64.b64decode(result["wavBase64"])
-    ...     st.audio(wav_bytes, format="audio/wav")
-    ...     st.download_button("Download", wav_bytes, "trimmed.wav")
+    >>> if result and result.get("type") == "export":
+    ...     wav = base64.b64decode(result["wavBase64"])
+    ...     st.audio(wav, format="audio/wav")
+    >>> if result and result.get("type") == "recording":
+    ...     st.audio(base64.b64decode(result["recordingBase64"]),
+    ...              format=result["mimeType"])
     """
     return _component_func(audio_url=audio_url, key=key, default=None)

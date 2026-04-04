@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name="streamlit-audio-editor",
-    version="0.3.0",
+    version="0.4.0",
     author="Dan Sheils",
     author_email="",
-    description="A browser-based audio editor component for Streamlit — trim, gain, loop, export WAV",
+    description="Browser-based audio editor & jam-session recorder for Streamlit — full effects rack, mic input, real-time recording",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/RhythrosaLabs/streamlit-audio-editor",
