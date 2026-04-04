@@ -2,7 +2,7 @@
 
 A browser-based audio editor component for Streamlit. Load any audio file, visualize the waveform, trim with draggable handles, adjust gain, loop a region, and export a clean WAV — all client-side via the Web Audio API, no ffmpeg or server processing required.
 
-![Audio editor screenshot](https://raw.githubusercontent.com/RhythrosaLabs/streamlit-audio-editor/main/docs/screenshot.png)
+![Audio editor screenshot](https://raw.githubusercontent.com/RhythrosaLabs/streamlit-audio-editor/main/screenshot.png)
 
 ## Features
 
