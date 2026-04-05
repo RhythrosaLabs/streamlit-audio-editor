@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="streamlit-audio-editor",
-    version="0.4.0",
+    version="0.4.1",
     author="Dan Sheils",
     author_email="",
     description="Browser-based audio editor & jam-session recorder for Streamlit — full effects rack, mic input, real-time recording",

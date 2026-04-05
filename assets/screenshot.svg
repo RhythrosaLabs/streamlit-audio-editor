@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0e0e1c"/><stop offset="100%" stop-color="#08080f"/></linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="900" height="520" rx="14" fill="url(#bg)" stroke="rgba(255,255,255,0.06)"/>
+  <!-- Header -->
+  <rect x="0" y="0" width="900" height="44" rx="14" fill="#0e0e1c"/>
+  <rect x="0" y="14" width="900" height="30" fill="#0e0e1c"/>
+  <text x="20" y="28" font-family="sans-serif" font-size="14" fill="#e2e8f0" font-weight="700">🎵 Audio Editor</text>
+  <line x1="0" y1="44" x2="900" y2="44" stroke="rgba(255,255,255,0.06)"/>
+  <!-- Transport -->
+  <rect x="20" y="52" width="860" height="36" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)"/>
+  <!-- Load button -->
+  <rect x="28" y="58" width="82" height="24" rx="6" fill="rgba(129,140,248,0.1)" stroke="rgba(129,140,248,0.3)"/>
+  <text x="69" y="74" font-family="sans-serif" font-size="10" fill="#818cf8" text-anchor="middle">📂 Load File</text>
+  <!-- Play button -->
+  <rect x="118" y="58" width="28" height="24" rx="6" fill="rgba(52,211,153,0.15)" stroke="rgba(52,211,153,0.3)"/>
+  <text x="132" y="74" font-family="sans-serif" font-size="12" fill="#34d399" text-anchor="middle">▶</text>
+  <rect x="150" y="58" width="28" height="24" rx="6" fill="rgba(255,255,255,0.03)"/>
+  <text x="164" y="74" font-family="sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">⏹</text>
+  <!-- Loop -->
+  <rect x="184" y="58" width="44" height="24" rx="6" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.3)"/>
+  <text x="206" y="74" font-family="sans-serif" font-size="9" fill="#f59e0b" text-anchor="middle">🔁 Loop</text>
+  <!-- Timecode -->
+  <rect x="240" y="58" width="120" height="24" rx="6" fill="rgba(255,255,255,0.03)"/>
+  <text x="300" y="74" font-family="monospace" font-size="10" fill="#94a3b8" text-anchor="middle">0:07.2 / 0:32.4</text>
+  <!-- Zoom -->
+  <text x="380" y="74" font-family="sans-serif" font-size="9" fill="#475569">Zoom</text>
+  <rect x="405" y="66" width="60" height="6" rx="3" fill="rgba(255,255,255,0.06)"/>
+  <rect x="405" y="66" width="30" height="6" rx="3" fill="rgba(129,140,248,0.4)"/>
+  <circle cx="435" cy="69" r="4" fill="#818cf8"/>
+  <!-- Export -->
+  <rect x="724" y="58" width="72" height="24" rx="6" fill="rgba(52,211,153,0.12)" stroke="rgba(52,211,153,0.3)"/>
+  <text x="760" y="74" font-family="sans-serif" font-size="10" fill="#34d399" text-anchor="middle">✂ Export</text>
+  <!-- Mic button -->
+  <rect x="802" y="58" width="70" height="24" rx="6" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.3)"/>
+  <text x="837" y="74" font-family="sans-serif" font-size="10" fill="#ef4444" text-anchor="middle">🎤 Mic</text>
+  <!-- Waveform area -->
+  <rect x="20" y="96" width="860" height="130" rx="10" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="30" y="112" font-family="sans-serif" font-size="8" fill="#475569" letter-spacing="1">WAVEFORM</text>
+  <!-- Waveform bars (stylized) -->
+  <g transform="translate(40,150)" opacity="0.6">
+    <rect x="0" y="-18" width="3" height="36" rx="1" fill="#818cf8"/><rect x="6" y="-12" width="3" height="24" rx="1" fill="#818cf8"/>
+    <rect x="12" y="-25" width="3" height="50" rx="1" fill="#818cf8"/><rect x="18" y="-20" width="3" height="40" rx="1" fill="#818cf8"/>
+    <rect x="24" y="-10" width="3" height="20" rx="1" fill="#818cf8"/><rect x="30" y="-30" width="3" height="60" rx="1" fill="#818cf8"/>
+    <rect x="36" y="-22" width="3" height="44" rx="1" fill="#818cf8"/><rect x="42" y="-15" width="3" height="30" rx="1" fill="#818cf8"/>
+    <rect x="48" y="-28" width="3" height="56" rx="1" fill="#818cf8"/><rect x="54" y="-18" width="3" height="36" rx="1" fill="#818cf8"/>
+    <rect x="60" y="-12" width="3" height="24" rx="1" fill="#818cf8"/><rect x="66" y="-32" width="3" height="64" rx="1" fill="#818cf8"/>
+    <rect x="72" y="-20" width="3" height="40" rx="1" fill="#818cf8"/><rect x="78" y="-26" width="3" height="52" rx="1" fill="#818cf8"/>
+    <rect x="84" y="-14" width="3" height="28" rx="1" fill="#818cf8"/><rect x="90" y="-22" width="3" height="44" rx="1" fill="#818cf8"/>
+    <rect x="96" y="-18" width="3" height="36" rx="1" fill="#818cf8"/><rect x="102" y="-30" width="3" height="60" rx="1" fill="#818cf8"/>
+    <rect x="108" y="-16" width="3" height="32" rx="1" fill="#818cf8"/><rect x="114" y="-24" width="3" height="48" rx="1" fill="#818cf8"/>
+    <rect x="120" y="-12" width="3" height="24" rx="1" fill="#818cf8"/><rect x="126" y="-28" width="3" height="56" rx="1" fill="#818cf8"/>
+    <rect x="132" y="-20" width="3" height="40" rx="1" fill="#818cf8"/><rect x="138" y="-34" width="3" height="68" rx="1" fill="#818cf8"/>
+    <rect x="144" y="-18" width="3" height="36" rx="1" fill="#818cf8"/><rect x="150" y="-14" width="3" height="28" rx="1" fill="#818cf8"/>
+    <rect x="156" y="-26" width="3" height="52" rx="1" fill="#818cf8"/><rect x="162" y="-22" width="3" height="44" rx="1" fill="#818cf8"/>
+    <rect x="168" y="-16" width="3" height="32" rx="1" fill="#818cf8"/><rect x="174" y="-30" width="3" height="60" rx="1" fill="#818cf8"/>
+    <rect x="180" y="-10" width="3" height="20" rx="1" fill="#818cf8"/><rect x="186" y="-24" width="3" height="48" rx="1" fill="#818cf8"/>
+    <rect x="192" y="-18" width="3" height="36" rx="1" fill="#818cf8"/><rect x="198" y="-28" width="3" height="56" rx="1" fill="#818cf8"/>
+    <rect x="204" y="-14" width="3" height="28" rx="1" fill="#818cf8"/><rect x="210" y="-20" width="3" height="40" rx="1" fill="#818cf8"/>
+    <rect x="216" y="-32" width="3" height="64" rx="1" fill="#818cf8"/><rect x="222" y="-16" width="3" height="32" rx="1" fill="#818cf8"/>
+    <rect x="228" y="-26" width="3" height="52" rx="1" fill="#818cf8"/><rect x="234" y="-12" width="3" height="24" rx="1" fill="#818cf8"/>
+    <rect x="240" y="-22" width="3" height="44" rx="1" fill="#818cf8"/><rect x="246" y="-18" width="3" height="36" rx="1" fill="#818cf8"/>
+    <rect x="252" y="-30" width="3" height="60" rx="1" fill="#818cf8"/><rect x="258" y="-14" width="3" height="28" rx="1" fill="#818cf8"/>
+    <rect x="264" y="-24" width="3" height="48" rx="1" fill="#818cf8"/><rect x="270" y="-10" width="3" height="20" rx="1" fill="#818cf8"/>
+    <rect x="276" y="-28" width="3" height="56" rx="1" fill="#818cf8"/><rect x="282" y="-20" width="3" height="40" rx="1" fill="#818cf8"/>
+    <rect x="288" y="-16" width="3" height="32" rx="1" fill="#818cf8"/><rect x="294" y="-32" width="3" height="64" rx="1" fill="#818cf8"/>
+    <!-- Trimmed region (lighter) -->
+    <rect x="300" y="-26" width="3" height="52" rx="1" fill="#475569"/><rect x="306" y="-18" width="3" height="36" rx="1" fill="#475569"/>
+    <rect x="312" y="-22" width="3" height="44" rx="1" fill="#475569"/><rect x="318" y="-14" width="3" height="28" rx="1" fill="#475569"/>
+    <rect x="324" y="-10" width="3" height="20" rx="1" fill="#475569"/><rect x="330" y="-20" width="3" height="40" rx="1" fill="#475569"/>
+    <rect x="336" y="-16" width="3" height="32" rx="1" fill="#475569"/><rect x="342" y="-24" width="3" height="48" rx="1" fill="#475569"/>
+    <rect x="348" y="-12" width="3" height="24" rx="1" fill="#475569"/><rect x="354" y="-18" width="3" height="36" rx="1" fill="#475569"/>
+  </g>
+  <!-- IN handle -->
+  <rect x="40" y="116" width="4" height="68" rx="2" fill="#34d399"/>
+  <text x="50" y="128" font-family="sans-serif" font-size="7" fill="#34d399" font-weight="700">IN</text>
+  <!-- OUT handle -->
+  <rect x="338" y="116" width="4" height="68" rx="2" fill="#f87171"/>
+  <text x="328" y="128" font-family="sans-serif" font-size="7" fill="#f87171" font-weight="700">OUT</text>
+  <!-- Playhead -->
+  <line x1="250" y1="116" x2="250" y2="200" stroke="#f87171" stroke-width="1.5"/>
+  <polygon points="246,116 254,116 250,110" fill="#f87171"/>
+  <!-- Time labels -->
+  <text x="42" y="218" font-family="monospace" font-size="8" fill="#475569">0:00</text>
+  <text x="200" y="218" font-family="monospace" font-size="8" fill="#475569">0:10</text>
+  <text x="360" y="218" font-family="monospace" font-size="8" fill="#475569">0:20</text>
+  <text x="520" y="218" font-family="monospace" font-size="8" fill="#475569">0:30</text>
+  <!-- Effects Rack -->
+  <rect x="20" y="234" width="860" height="270" rx="10" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="30" y="252" font-family="sans-serif" font-size="9" fill="#475569" letter-spacing="1.2" font-weight="600">EFFECTS RACK</text>
+  <!-- EQ Section -->
+  <rect x="30" y="262" width="130" height="106" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="95" y="278" font-family="sans-serif" font-size="9" fill="#818cf8" text-anchor="middle" font-weight="600">3-Band EQ</text>
+  <text x="50" y="296" font-family="sans-serif" font-size="8" fill="#475569">Low</text>
+  <rect x="70" y="290" width="60" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="70" y="290" width="30" height="4" rx="2" fill="#818cf8"/><circle cx="100" cy="292" r="3" fill="#818cf8"/>
+  <text x="50" y="314" font-family="sans-serif" font-size="8" fill="#475569">Mid</text>
+  <rect x="70" y="308" width="60" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="70" y="308" width="36" height="4" rx="2" fill="#818cf8"/><circle cx="106" cy="310" r="3" fill="#818cf8"/>
+  <text x="50" y="332" font-family="sans-serif" font-size="8" fill="#475569">High</text>
+  <rect x="70" y="326" width="60" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="70" y="326" width="42" height="4" rx="2" fill="#818cf8"/><circle cx="112" cy="328" r="3" fill="#818cf8"/>
+  <text x="140" y="360" font-family="monospace" font-size="7" fill="#475569" text-anchor="end">+2.0dB</text>
+  <!-- Filter -->
+  <rect x="168" y="262" width="130" height="106" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="233" y="278" font-family="sans-serif" font-size="9" fill="#ec4899" text-anchor="middle" font-weight="600">Filter</text>
+  <text x="180" y="296" font-family="sans-serif" font-size="8" fill="#475569">Type</text>
+  <rect x="205" y="286" width="80" height="16" rx="4" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)"/>
+  <text x="245" y="298" font-family="sans-serif" font-size="8" fill="#e2e8f0" text-anchor="middle">lowpass ▾</text>
+  <text x="180" y="316" font-family="sans-serif" font-size="8" fill="#475569">Freq</text>
+  <rect x="205" y="310" width="80" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="205" y="310" width="60" height="4" rx="2" fill="#ec4899"/><circle cx="265" cy="312" r="3" fill="#ec4899"/>
+  <text x="180" y="336" font-family="sans-serif" font-size="8" fill="#475569">Res</text>
+  <rect x="205" y="330" width="80" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="205" y="330" width="20" height="4" rx="2" fill="#ec4899"/><circle cx="225" cy="332" r="3" fill="#ec4899"/>
+  <!-- Compressor -->
+  <rect x="306" y="262" width="130" height="106" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="371" y="278" font-family="sans-serif" font-size="9" fill="#f59e0b" text-anchor="middle" font-weight="600">Compressor</text>
+  <text x="318" y="296" font-family="sans-serif" font-size="8" fill="#475569">Thresh</text>
+  <rect x="355" y="290" width="68" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="355" y="290" width="40" height="4" rx="2" fill="#f59e0b"/><circle cx="395" cy="292" r="3" fill="#f59e0b"/>
+  <text x="318" y="314" font-family="sans-serif" font-size="8" fill="#475569">Ratio</text>
+  <rect x="355" y="308" width="68" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="355" y="308" width="24" height="4" rx="2" fill="#f59e0b"/><circle cx="379" cy="310" r="3" fill="#f59e0b"/>
+  <text x="318" y="332" font-family="sans-serif" font-size="8" fill="#475569">Attack</text>
+  <rect x="355" y="326" width="68" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="355" y="326" width="12" height="4" rx="2" fill="#f59e0b"/><circle cx="367" cy="328" r="3" fill="#f59e0b"/>
+  <text x="318" y="350" font-family="sans-serif" font-size="8" fill="#475569">Release</text>
+  <rect x="355" y="344" width="68" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="355" y="344" width="34" height="4" rx="2" fill="#f59e0b"/><circle cx="389" cy="346" r="3" fill="#f59e0b"/>
+  <!-- Delay -->
+  <rect x="444" y="262" width="130" height="106" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="509" y="278" font-family="sans-serif" font-size="9" fill="#22d3ee" text-anchor="middle" font-weight="600">Delay</text>
+  <text x="456" y="296" font-family="sans-serif" font-size="8" fill="#475569">Time</text>
+  <rect x="485" y="290" width="76" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="485" y="290" width="28" height="4" rx="2" fill="#22d3ee"/><circle cx="513" cy="292" r="3" fill="#22d3ee"/>
+  <text x="456" y="314" font-family="sans-serif" font-size="8" fill="#475569">Feedback</text>
+  <rect x="496" y="308" width="65" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="496" y="308" width="20" height="4" rx="2" fill="#22d3ee"/><circle cx="516" cy="310" r="3" fill="#22d3ee"/>
+  <!-- Chorus -->
+  <rect x="582" y="262" width="130" height="106" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="647" y="278" font-family="sans-serif" font-size="9" fill="#a78bfa" text-anchor="middle" font-weight="600">Chorus</text>
+  <text x="594" y="296" font-family="sans-serif" font-size="8" fill="#475569">Rate</text>
+  <rect x="620" y="290" width="80" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="620" y="290" width="32" height="4" rx="2" fill="#a78bfa"/><circle cx="652" cy="292" r="3" fill="#a78bfa"/>
+  <text x="594" y="314" font-family="sans-serif" font-size="8" fill="#475569">Depth</text>
+  <rect x="620" y="308" width="80" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="620" y="308" width="48" height="4" rx="2" fill="#a78bfa"/><circle cx="668" cy="310" r="3" fill="#a78bfa"/>
+  <text x="594" y="332" font-family="sans-serif" font-size="8" fill="#475569">Mix</text>
+  <rect x="620" y="326" width="80" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="620" y="326" width="24" height="4" rx="2" fill="#a78bfa"/><circle cx="644" cy="328" r="3" fill="#a78bfa"/>
+  <!-- More FX indicators -->
+  <rect x="720" y="262" width="150" height="106" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="795" y="278" font-family="sans-serif" font-size="9" fill="#34d399" text-anchor="middle" font-weight="600">More Effects</text>
+  <text x="730" y="296" font-family="sans-serif" font-size="8" fill="#475569">Distortion</text>
+  <text x="730" y="314" font-family="sans-serif" font-size="8" fill="#475569">Tremolo</text>
+  <text x="730" y="332" font-family="sans-serif" font-size="8" fill="#475569">Reverb</text>
+  <text x="730" y="350" font-family="sans-serif" font-size="8" fill="#475569">Stereo Pan</text>
+  <rect x="800" y="290" width="56" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="800" y="308" width="56" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="800" y="326" width="56" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="800" y="344" width="56" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="800" y="290" width="10" height="4" rx="2" fill="#34d399"/>
+  <rect x="800" y="308" width="20" height="4" rx="2" fill="#34d399"/>
+  <rect x="800" y="326" width="36" height="4" rx="2" fill="#34d399"/>
+  <rect x="800" y="344" width="28" height="4" rx="2" fill="#34d399"/>
+  <!-- Gain + Speed row -->
+  <rect x="30" y="376" width="200" height="50" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)"/>
+  <text x="130" y="392" font-family="sans-serif" font-size="9" fill="#f87171" text-anchor="middle" font-weight="600">Gain · Speed / Pitch</text>
+  <text x="42" y="412" font-family="sans-serif" font-size="8" fill="#475569">Gain</text>
+  <rect x="70" y="406" width="60" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="70" y="406" width="30" height="4" rx="2" fill="#f87171"/><circle cx="100" cy="408" r="3" fill="#f87171"/>
+  <text x="140" y="412" font-family="sans-serif" font-size="8" fill="#475569">Speed</text>
+  <rect x="168" y="406" width="50" height="4" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="168" y="406" width="25" height="4" rx="2" fill="#f87171"/><circle cx="193" cy="408" r="3" fill="#f87171"/>
+  <!-- Mic / Jam area -->
+  <rect x="240" y="376" width="200" height="50" rx="8" fill="rgba(239,68,68,0.03)" stroke="rgba(239,68,68,0.1)"/>
+  <text x="340" y="392" font-family="sans-serif" font-size="9" fill="#ef4444" text-anchor="middle" font-weight="600">🎤 Jam Session</text>
+  <rect x="260" y="400" width="60" height="20" rx="5" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.3)"/>
+  <text x="290" y="414" font-family="sans-serif" font-size="8" fill="#ef4444" text-anchor="middle">⏺ Record</text>
+  <rect x="326" y="400" width="50" height="20" rx="5" fill="rgba(255,255,255,0.03)"/>
+  <text x="351" y="414" font-family="sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">⏹ Stop</text>
+  <rect x="382" y="400" width="46" height="20" rx="5" fill="rgba(255,255,255,0.03)"/>
+  <text x="405" y="414" font-family="sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">📤 Send</text>
+  <!-- Footer -->
+  <text x="450" y="510" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,0.15)" text-anchor="middle">Load any audio · Trim with IN/OUT handles · Full effects rack · Record jam sessions with mic input</text>
+</svg>
