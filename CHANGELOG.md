@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2
+
+- Update SVG screenshot to match actual app UI
+
 ## 0.4.0
 
 ### Effects rack
