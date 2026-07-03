@@ -294,3 +294,8 @@ MIT — see [LICENSE](LICENSE) for details.
 - **GitHub:** [https://github.com/RhythrosaLabs/streamlit-audio-editor](https://github.com/RhythrosaLabs/streamlit-audio-editor)
 - **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 - **Issues:** [https://github.com/RhythrosaLabs/streamlit-audio-editor/issues](https://github.com/RhythrosaLabs/streamlit-audio-editor/issues)
+
+
+## Support
+
+If you find this useful, consider supporting via [PayPal](https://paypal.me/noodlebake)
